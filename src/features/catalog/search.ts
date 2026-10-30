@@ -68,3 +68,12 @@ export function toListQuery(search: CatalogSearch): NftListQuery {
 export function withFilters(patch: Partial<CatalogSearch>) {
   return (previous: CatalogSearch): CatalogSearch => ({ ...previous, ...patch, page: undefined })
 }
+
+export function activeFilterCount(search: CatalogSearch) {
+  return (
+    (search.q ? 1 : 0) +
+    (search.category?.length ?? 0) +
+    (search.network?.length ?? 0) +
+    (search.min !== undefined || search.max !== undefined ? 1 : 0)
+  )
+}

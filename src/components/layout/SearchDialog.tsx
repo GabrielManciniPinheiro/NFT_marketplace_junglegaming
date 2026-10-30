@@ -1,4 +1,4 @@
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/button'
@@ -13,16 +13,27 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-/** Header search: a focus-trapped dialog that sends the term to the catalog URL (?q=). */
+/** Header search: a focus-trapped dialog that writes the term to the catalog URL (?q=). */
 export function SearchDialog() {
   const navigate = useNavigate()
+  const pathname = useRouterState({ select: (state) => state.location.pathname })
   const [open, setOpen] = useState(false)
   const [term, setTerm] = useState('')
 
   function submit(event: FormEvent) {
     event.preventDefault()
     setOpen(false)
-    void navigate({ to: '/mercado', search: { q: term.trim() || undefined } })
+    const q = term.trim() || undefined
+    // On Início the home catalog is filtered in place; elsewhere results open in Mercado.
+    if (pathname === '/') {
+      void navigate({
+        to: '/',
+        search: (previous) => ({ ...previous, q, page: undefined }),
+        hash: 'catalogo',
+      })
+    } else {
+      void navigate({ to: '/mercado', search: { q } })
+    }
   }
 
   return (
