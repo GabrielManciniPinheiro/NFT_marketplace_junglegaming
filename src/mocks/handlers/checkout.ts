@@ -9,6 +9,7 @@ import {
 import { eth } from '@/lib/eth'
 import { mockConfig } from '../config'
 import { store, type QuoteDto } from '../db/store'
+import { REFERRAL_CODES } from '../fixtures/accounts'
 import { updateNft } from '../domain/catalog'
 import { buildQuote, createOrder, diffQuotes, settleOrder, userCart } from '../domain/commerce'
 import { fail, json, noContent, readJson, route } from '../lib/http'
@@ -120,6 +121,23 @@ export const checkoutHandlers = [
       }
       return json(ownedOrder(previous.orderId, auth.user.id), 200, {
         'Idempotent-Replayed': 'true',
+      })
+    }
+
+    // One purchase in flight per collector: a retry with a new key after a timeout must
+    // recover the pending order instead of creating a second one.
+    const pending = Object.values(store.state.orders).find(
+      (record) => record.order.userId === auth.user.id && record.order.status === 'pending',
+    )
+    if (pending) {
+      throw fail(409, 'CONFLICT', 'Você já tem um pedido em processamento.', {
+        details: { reason: 'pending-order', orderId: pending.order.id },
+      })
+    }
+
+    if (!REFERRAL_CODES.includes(body.collector.referralCode.trim().toUpperCase())) {
+      throw fail(422, 'VALIDATION_FAILED', 'Revise os dados do colecionador.', {
+        fieldErrors: { 'collector.referralCode': ['Código de indicação não encontrado.'] },
       })
     }
 

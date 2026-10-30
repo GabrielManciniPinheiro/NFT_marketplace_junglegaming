@@ -21,11 +21,18 @@ export function hexDigest(input: string, length = 64) {
   let out = ''
   let round = 0
   while (out.length < length) {
-    let hash = 0x811c9dc5 ^ round
-    for (const char of `${round}:${input}`) {
+    // The round goes at the end: as a prefix, `'0' + round` cancels any seed mixing.
+    let hash = 0x811c9dc5
+    for (const char of `${input}#${round}`) {
       hash ^= char.charCodeAt(0)
       hash = Math.imul(hash, 0x01000193)
     }
+    // murmur3 finalizer: full avalanche, so neighbouring rounds look unrelated
+    hash ^= hash >>> 16
+    hash = Math.imul(hash, 0x85ebca6b)
+    hash ^= hash >>> 13
+    hash = Math.imul(hash, 0xc2b2ae35)
+    hash ^= hash >>> 16
     out += (hash >>> 0).toString(16).padStart(8, '0')
     round++
   }
