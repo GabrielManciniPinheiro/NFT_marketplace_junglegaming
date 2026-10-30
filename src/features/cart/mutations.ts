@@ -6,7 +6,12 @@ import { isApiError } from '@/api/errors'
 import { cartKey, queryKeys } from '@/api/query-keys'
 import { useSession } from '@/features/auth/session'
 
-/** Every cart mutation answers with the full cart: the cache is replaced, not refetched. */
+/**
+ * Every cart mutation answers with the full cart: the cache is replaced, not refetched.
+ * All of them share one scope, so rapid clicks are sent in order and the last response
+ * on screen is always the newest server state.
+ */
+const CART_SCOPE = { id: 'cart' }
 function useCartCache() {
   const queryClient = useQueryClient()
   const { user } = useSession()
@@ -32,6 +37,7 @@ function useCartCache() {
 export function useAddToCart() {
   const cache = useCartCache()
   return useMutation({
+    scope: CART_SCOPE,
     mutationFn: (body: AddCartItemRequest) => cartApi.addItem(body),
     onSuccess: (cart) => cache.store(cart),
     onError: (error, body) => cache.refreshCatalog(error, body.nftId),
@@ -41,6 +47,7 @@ export function useAddToCart() {
 export function useUpdateCartItem() {
   const cache = useCartCache()
   return useMutation({
+    scope: CART_SCOPE,
     mutationFn: ({ itemId, body }: { itemId: string; body: UpdateCartItemRequest }) =>
       cartApi.updateItem(itemId, body),
     onSuccess: (cart) => cache.store(cart),
@@ -51,6 +58,7 @@ export function useUpdateCartItem() {
 export function useRemoveCartItem() {
   const cache = useCartCache()
   return useMutation({
+    scope: CART_SCOPE,
     mutationFn: (itemId: string) => cartApi.removeItem(itemId),
     onSuccess: (cart) => cache.store(cart),
     onError: (error) => cache.refreshCatalog(error),
@@ -60,6 +68,7 @@ export function useRemoveCartItem() {
 export function useApplyCoupon() {
   const cache = useCartCache()
   return useMutation({
+    scope: CART_SCOPE,
     mutationFn: (code: string) => cartApi.applyCoupon(code),
     onSuccess: (cart) => cache.store(cart),
   })
@@ -68,6 +77,7 @@ export function useApplyCoupon() {
 export function useRemoveCoupon() {
   const cache = useCartCache()
   return useMutation({
+    scope: CART_SCOPE,
     mutationFn: () => cartApi.removeCoupon(),
     onSuccess: (cart) => cache.store(cart),
   })

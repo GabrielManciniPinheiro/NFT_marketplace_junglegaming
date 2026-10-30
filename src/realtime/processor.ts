@@ -107,10 +107,10 @@ export function createEventProcessor(queryClient: QueryClient) {
       const edition = event.data.editions.find((item) => item.id === line.edition)
       if (edition && edition.available < line.quantity) {
         toast.warning(
-          `${line.name}: a edição ${line.editionLabel} agora tem ${edition.available} unidade(s) disponível(is).`,
-          {
-            id: `nft-${nftId}`,
-          },
+          edition.available === 0
+            ? `${line.name}: a edição ${line.editionLabel} esgotou.`
+            : `${line.name}: restam apenas ${edition.available} unidade${edition.available === 1 ? '' : 's'} da edição ${line.editionLabel}.`,
+          { id: `nft-${nftId}` },
         )
       } else if (edition && edition.price !== line.unitPrice) {
         toast.info(
