@@ -10,7 +10,6 @@ import { EthAmount } from '@/components/common/EthAmount'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Spinner } from '@/components/ui/spinner'
 import { useApplyCoupon, useRemoveCoupon } from '../mutations'
@@ -149,19 +148,18 @@ export function CartSummary({
             (−) <EthAmount value={summary.discount} />
           </dd>
         </div>
-        <div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-soft">Taxa de rede</dt>
-            <dd>
-              <EthAmount value={summary.networkFee} />
-            </dd>
-          </div>
+        <div className="grid grid-cols-[1fr_auto] gap-x-4">
+          <dt className="text-soft">Taxa de rede</dt>
+          <dd>
+            <EthAmount value={summary.networkFee} />
+          </dd>
           {summary.feeEstimated && (
-            <p className="mt-1 text-right text-[0.6875rem] text-brand">Taxa estimada</p>
+            <dd className="col-span-2 mt-1 text-right text-[0.6875rem] text-brand">
+              Taxa estimada
+            </dd>
           )}
         </div>
-        <Separator />
-        <div className="flex justify-between gap-4 text-base font-bold">
+        <div className="flex justify-between gap-4 border-t border-border pt-4 text-base font-bold">
           <dt>Total</dt>
           <dd className="text-brand">
             <EthAmount value={summary.total} />

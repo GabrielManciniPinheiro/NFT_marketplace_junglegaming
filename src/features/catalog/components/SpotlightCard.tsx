@@ -64,14 +64,7 @@ export function SpotlightCard() {
           {spotlight.headline}
         </h2>
       </div>
-      <Link
-        to="/nft/$nftId"
-        params={{ nftId: spotlight.nft.id }}
-        className="block rounded-lg"
-        tabIndex={-1}
-      >
-        <NftImage image={spotlight.nft.image} sizes="270px" decorative className="rounded-lg" />
-      </Link>
+      <NftImage image={spotlight.nft.image} sizes="270px" decorative className="rounded-lg" />
       <div className="space-y-1 text-center">
         <p className="text-sm text-soft">{spotlight.nft.name}</p>
         <p className="flex flex-wrap items-baseline justify-center gap-x-2 text-sm font-bold">

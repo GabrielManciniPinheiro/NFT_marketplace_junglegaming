@@ -1,8 +1,6 @@
-import type { ReactNode } from 'react'
 import type { Coupon } from '@/api/contracts'
 import { EthAmount } from '@/components/common/EthAmount'
 import { NftImage } from '@/components/common/NftImage'
-import { Separator } from '@/components/ui/separator'
 import type { Image } from '@/api/contracts'
 
 export interface OrderLineView {
@@ -56,7 +54,6 @@ export function OrderTotals({
   total,
   coupon,
   feeNote,
-  children,
 }: {
   subtotal: string
   discount: string
@@ -64,7 +61,6 @@ export function OrderTotals({
   total: string
   coupon: Coupon | null
   feeNote?: string
-  children?: ReactNode
 }) {
   return (
     <dl className="space-y-3 text-sm">
@@ -80,23 +76,21 @@ export function OrderTotals({
           (−) <EthAmount value={discount} />
         </dd>
       </div>
-      <div>
-        <div className="flex justify-between gap-4">
-          <dt className="text-soft">Taxa de rede</dt>
-          <dd>
-            <EthAmount value={networkFee} />
-          </dd>
-        </div>
-        {feeNote && <p className="mt-1 text-center text-[0.6875rem] text-brand">{feeNote}</p>}
+      <div className="grid grid-cols-[1fr_auto] gap-x-4">
+        <dt className="text-soft">Taxa de rede</dt>
+        <dd>
+          <EthAmount value={networkFee} />
+        </dd>
+        {feeNote && (
+          <dd className="col-span-2 mt-1 text-center text-[0.6875rem] text-brand">{feeNote}</dd>
+        )}
       </div>
-      <Separator />
-      <div className="flex justify-between gap-4 text-base font-bold">
+      <div className="flex justify-between gap-4 border-t border-border pt-4 text-base font-bold">
         <dt>Total</dt>
         <dd className="text-brand">
           <EthAmount value={total} />
         </dd>
       </div>
-      {children}
     </dl>
   )
 }

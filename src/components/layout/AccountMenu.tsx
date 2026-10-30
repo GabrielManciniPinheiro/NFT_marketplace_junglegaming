@@ -38,13 +38,10 @@ export function AccountMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          aria-label={`Conta de ${user.displayName}`}
-        >
-          <UserAvatar user={user} className="size-8" />
+        <Button variant="ghost" size="icon" className="rounded-full">
+          {/* The name comes from text (not aria-label) so it never contradicts the initials. */}
+          <UserAvatar user={user} className="size-8" decorative />
+          <span className="sr-only">Conta de {user.displayName}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">

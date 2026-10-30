@@ -1,0 +1,5 @@
+/* Hidden in visual regression: transient toasts and the Mock Lab trigger. */
+[data-sonner-toaster],
+#kurio-mock-lab {
+  display: none !important;
+}
