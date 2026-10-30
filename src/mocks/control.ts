@@ -1,23 +1,11 @@
 import type { EditionId, RealtimeEvent } from '@/api/contracts'
 import { eth } from '@/lib/eth'
+import { clearKurioStorage } from './boot'
 import { mockConfig, SCENARIOS, type MockConfig, type ScenarioId } from './config'
 import { clearPersistedDb, store } from './db/store'
 import { buildNftUpdatedEvent, editionsOf, updateNft, type NftPatch } from './domain/catalog'
 import { pendingOrders, settleOrder } from './domain/commerce'
 import { broadcast, dropConnections, emitToUser, realtimeStatus } from './realtime/server'
-
-/** Removes every `kurio.*` key (mock database, mock config and the app's session/cart ids). */
-export function clearKurioStorage() {
-  for (const storage of [localStorage, sessionStorage]) {
-    try {
-      Object.keys(storage)
-        .filter((key) => key.startsWith('kurio.'))
-        .forEach((key) => storage.removeItem(key))
-    } catch {
-      /* ignore */
-    }
-  }
-}
 
 function deliver(event: RealtimeEvent) {
   if (event.type === 'order.updated') emitToUser(event.userId, event)

@@ -1,21 +1,29 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from 'cn'
 import { NftImage } from '@/components/common/NftImage'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { highlightsQueryOptions } from '../queries'
+import { HERO_IMAGE_SIZES, highlightsQueryOptions } from '../queries'
 
 /**
  * "Destaques": hero with the featured NFTs from the highlights API. Slides change only on
  * request (no auto-rotation), each dot is a labelled button.
+ *
+ * `onSettled` fires once the artwork (the page's LCP element) is on screen, or as soon as
+ * there is nothing to wait for (failed request, no highlights).
  */
-export function Hero() {
-  const { data, isPending } = useQuery(highlightsQueryOptions())
+export function Hero({ onSettled }: { onSettled?: () => void }) {
+  const { data, isPending, failureCount } = useQuery(highlightsQueryOptions())
   const [index, setIndex] = useState(0)
   const slides = data?.hero ?? []
   const current = slides.length ? slides[index % slides.length]! : null
+
+  const nothingToWaitFor = failureCount > 0 || (!isPending && !current)
+  useEffect(() => {
+    if (nothingToWaitFor) onSettled?.()
+  }, [nothingToWaitFor, onSettled])
 
   return (
     <section aria-labelledby="hero-title" className="page-container">
@@ -78,8 +86,9 @@ export function Hero() {
             >
               <NftImage
                 image={current.image}
-                sizes="(min-width: 768px) 448px, calc(100vw - 2rem)"
+                sizes={HERO_IMAGE_SIZES}
                 priority
+                onSettled={onSettled}
                 className="rounded-3xl"
               />
             </Link>

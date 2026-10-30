@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState, type ReactNode } from 'react'
+import { networkReady } from '@/app/network-gate'
 import { useSessionToken } from '@/features/auth/session'
 import { createEventProcessor, reconcileWithRest } from './processor'
 import type { RealtimeStatus } from './socket'
@@ -10,9 +11,9 @@ import { RealtimeStatusContext } from './status'
  * (login, logout, expiry, user switch), so a connection — and its listeners — never
  * outlives the session that opened it.
  *
- * The client is imported lazily: engine.io-client captures the global `WebSocket` when its
- * module is evaluated, so it must load after the mock layer patched it (and it stays out
- * of the critical bundle).
+ * The client is imported lazily, after the network gate: engine.io-client captures the
+ * global `WebSocket` when its module is evaluated, so it must load after the mock layer
+ * patched it (and it stays out of the critical bundle).
  */
 export function RealtimeProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient()
@@ -24,14 +25,16 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
     let disposed = false
     let dispose: (() => void) | undefined
 
-    void import('./socket').then(({ connectRealtime }) => {
-      if (disposed) return
-      dispose = connectRealtime(token, {
-        onEvent: processor.handle,
-        onStatus: setStatus,
-        onReconnect: () => reconcileWithRest(queryClient),
+    void networkReady
+      .then(() => import('./socket'))
+      .then(({ connectRealtime }) => {
+        if (disposed) return
+        dispose = connectRealtime(token, {
+          onEvent: processor.handle,
+          onStatus: setStatus,
+          onReconnect: () => reconcileWithRest(queryClient),
+        })
       })
-    })
 
     return () => {
       disposed = true

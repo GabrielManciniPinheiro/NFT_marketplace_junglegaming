@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { cn } from 'cn'
 import type { NftDetail } from '@/api/contracts'
 import { NftImage } from '@/components/common/NftImage'
+import { DETAIL_IMAGE_SIZES } from '../queries'
 import {
   Dialog,
   DialogContent,
@@ -43,12 +44,7 @@ export function Gallery({ nft }: { nft: NftDetail }) {
       </ul>
 
       <div className="relative min-w-0 flex-1 rounded-md bg-surface p-3 sm:p-4">
-        <NftImage
-          image={image}
-          sizes="(min-width: 1024px) 440px, (min-width: 640px) 60vw, calc(100vw - 2rem)"
-          priority
-          className="rounded-xl"
-        />
+        <NftImage image={image} sizes={DETAIL_IMAGE_SIZES} priority className="rounded-xl" />
         <Dialog>
           <DialogTrigger asChild>
             <button

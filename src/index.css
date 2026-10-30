@@ -137,6 +137,12 @@
   }
 }
 
+/* Below-the-fold sections skip layout/paint until they approach the viewport. */
+@utility defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1200px;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

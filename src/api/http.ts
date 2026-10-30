@@ -1,5 +1,6 @@
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 import type { z } from 'zod'
+import { networkReady } from '@/app/network-gate'
 import { env } from '@/config/env'
 import { apiErrorBodySchema } from './contracts'
 import { credentials } from './credentials'
@@ -90,6 +91,7 @@ class RequestTimeout extends Error {}
 
 async function send(options: RequestOptions) {
   const { signal, timeoutMs = DEFAULT_TIMEOUT_MS, ...config } = options
+  await networkReady
   const deadline = new AbortController()
   const timer = setTimeout(() => deadline.abort(new RequestTimeout()), timeoutMs)
   const combined = signal ? AbortSignal.any([signal, deadline.signal]) : deadline.signal

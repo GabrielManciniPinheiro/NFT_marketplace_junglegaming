@@ -13,7 +13,7 @@ export function RelatedNfts({
   if (isError || (data && data.items.length === 0)) return null
 
   return (
-    <section aria-labelledby="related-title" className="space-y-6">
+    <section aria-labelledby="related-title" className="space-y-6 defer-render">
       <h2 id="related-title" className="border-b border-border pb-3 text-base font-bold text-brand">
         {title}
       </h2>

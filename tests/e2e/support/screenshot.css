@@ -3,3 +3,8 @@
 #kurio-mock-lab {
   display: none !important;
 }
+
+/* Full-page captures must paint everything, including deferred sections. */
+.defer-render {
+  content-visibility: visible !important;
+}

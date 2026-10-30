@@ -1,7 +1,6 @@
 import { setupWorker } from 'msw/browser'
-import { isScenarioId, mockConfig } from './config'
-import { clearKurioStorage, mockControl } from './control'
-import { clearPersistedDb, store } from './db/store'
+import { mockControl } from './control'
+import { store } from './db/store'
 import { resumeSettlements } from './domain/commerce'
 import { handlers } from './handlers'
 import { API } from './lib/http'
@@ -9,26 +8,10 @@ import { API } from './lib/http'
 export const worker = setupWorker(...handlers)
 
 /**
- * Boots the simulated backend before the app renders.
- *
- * URL switches (useful for demos and shareable links):
- * - `?mock=<scenario>` applies a scenario (see `SCENARIOS`) and keeps it across reloads;
- * - `?mock-reset` restores the seed and signs out before the app starts.
+ * Boots the simulated backend: mock database (persisted seed), service worker and the
+ * control API. URL switches (`?mock=`, `?mock-reset`) are applied earlier by `boot.ts`.
  */
 export async function startMocks() {
-  const url = new URL(window.location.href)
-
-  if (url.searchParams.has('mock-reset')) {
-    clearKurioStorage()
-    clearPersistedDb()
-    mockConfig.reset()
-    url.searchParams.delete('mock-reset')
-  }
-  const scenario = url.searchParams.get('mock')
-  if (scenario && isScenarioId(scenario)) mockConfig.applyScenario(scenario)
-  url.searchParams.delete('mock')
-  window.history.replaceState(window.history.state, '', url)
-
   await store.init()
   await worker.start({
     serviceWorker: { url: '/mockServiceWorker.js' },

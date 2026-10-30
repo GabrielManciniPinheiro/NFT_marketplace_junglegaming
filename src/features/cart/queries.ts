@@ -13,7 +13,7 @@ export function cartQueryOptions(userId: string | null) {
     queryKey: cartKey(userId),
     queryFn: async ({ signal }) => {
       const cart = await cartApi.get(signal)
-      if (cart.owner === 'guest' && cart.id !== credentials.getGuestCartId()) {
+      if (cart.owner === 'guest' && cart.id && cart.id !== credentials.getGuestCartId()) {
         credentials.setGuestCartId(cart.id)
       }
       return cart

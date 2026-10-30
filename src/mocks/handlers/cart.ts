@@ -4,7 +4,14 @@ import {
   updateCartItemRequestSchema,
 } from '@/api/contracts'
 import { store } from '../db/store'
-import { cartView, couponForCode, lineEdition, resolveCart, touch } from '../domain/commerce'
+import {
+  cartView,
+  couponForCode,
+  emptyGuestCart,
+  lineEdition,
+  resolveCart,
+  touch,
+} from '../domain/commerce'
 import { fail, json, readJson, route } from '../lib/http'
 
 function availabilityError(
@@ -26,9 +33,9 @@ function availabilityError(
 
 export const cartHandlers = [
   route('get', '/cart', 'optional', ({ auth, request }) => {
-    const cart = resolveCart(auth?.user.id ?? null, request)
-    store.commit()
-    return json(cartView(cart))
+    const cart = resolveCart(auth?.user.id ?? null, request, { create: false })
+    if (cart) store.commit() // account carts may have been created on first access
+    return json(cartView(cart ?? emptyGuestCart()))
   }),
 
   route('post', '/cart/items', 'optional', async ({ auth, request }) => {

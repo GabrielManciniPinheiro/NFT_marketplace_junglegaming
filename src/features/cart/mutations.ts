@@ -21,7 +21,7 @@ function useCartCache() {
     key,
     queryClient,
     store(cart: Cart) {
-      if (cart.owner === 'guest') credentials.setGuestCartId(cart.id)
+      if (cart.owner === 'guest' && cart.id) credentials.setGuestCartId(cart.id)
       queryClient.setQueryData(key, cart)
     },
     /** Availability conflicts mean our catalog data is stale too. */

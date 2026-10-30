@@ -7,7 +7,6 @@ import { RealtimeBanner } from '@/components/layout/RealtimeBanner'
 import { RouteFocus } from '@/components/layout/RouteFocus'
 import { SessionManager } from '@/components/layout/SessionManager'
 import { Toaster } from '@/components/ui/sonner'
-import { TooltipProvider } from '@/components/ui/tooltip'
 import { RealtimeProvider } from '@/realtime/RealtimeProvider'
 
 export const Route = createRootRouteWithContext<RouterContext>()({
@@ -21,7 +20,7 @@ function RootLayout() {
   })
   return (
     <RealtimeProvider>
-      <TooltipProvider delayDuration={300}>
+      <>
         <a
           href="#main-content"
           className="sr-only rounded-sm bg-primary px-4 py-2 font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
@@ -39,7 +38,7 @@ function RootLayout() {
         <Toaster position="bottom-right" closeButton />
         <SessionManager />
         <RouteFocus />
-      </TooltipProvider>
+      </>
     </RealtimeProvider>
   )
 }

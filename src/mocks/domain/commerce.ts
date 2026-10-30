@@ -88,11 +88,30 @@ export function createGuestCart(): CartRecord {
 }
 
 /** Authenticated users get their account cart; guests the cart named by `X-Guest-Cart`. */
-export function resolveCart(userId: string | null, request: Request): CartRecord {
+export function resolveCart(userId: string | null, request: Request): CartRecord
+export function resolveCart(
+  userId: string | null,
+  request: Request,
+  options: { create: false },
+): CartRecord | null
+export function resolveCart(userId: string | null, request: Request, { create = true } = {}) {
   if (userId) return userCart(userId)
   const guestId = request.headers.get('X-Guest-Cart')
   const existing = guestId ? store.state.carts[guestId] : undefined
-  return existing && existing.userId === null ? existing : createGuestCart()
+  if (existing && existing.userId === null) return existing
+  return create ? createGuestCart() : null
+}
+
+/** Empty, unsaved visitor cart: a guest cart is only persisted when the first item arrives. */
+export function emptyGuestCart(): CartRecord {
+  return {
+    id: '',
+    userId: null,
+    lines: [],
+    couponCode: null,
+    version: 0,
+    updatedAt: new Date(0).toISOString(),
+  }
 }
 
 export function touch(cart: CartRecord) {

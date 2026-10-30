@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { isApiError } from '@/api/errors'
 import { Breadcrumbs } from '@/components/common/Breadcrumbs'
+import { Skeleton } from '@/components/ui/skeleton'
 import { ErrorState } from '@/components/common/ErrorState'
 import { NotFound } from '@/components/common/NotFound'
 import { Gallery } from '@/features/nft/components/Gallery'
@@ -73,7 +74,15 @@ function NftDetailPage() {
         )}
       </div>
 
-      {detail.data && <NftInfoTabs nft={detail.data} tab={tab} onTabChange={setTab} />}
+      {detail.data ? (
+        <NftInfoTabs nft={detail.data} tab={tab} onTabChange={setTab} />
+      ) : detail.isPending ? (
+        // Reserves the tabs' footprint so the sections below do not shift when data arrives.
+        <div aria-hidden className="space-y-5">
+          <Skeleton className="h-9 w-80 max-w-full" />
+          <Skeleton className="h-[30rem] w-full sm:h-[22rem]" />
+        </div>
+      ) : null}
       <RelatedNfts nftId={nftId} />
     </div>
   )

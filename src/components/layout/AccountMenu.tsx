@@ -1,25 +1,17 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { LogInIcon, LogOutIcon } from 'lucide-react'
-import { UserAvatar } from '@/components/common/UserAvatar'
+import { LogInIcon } from 'lucide-react'
+import { lazy, Suspense } from 'react'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSession } from '@/features/auth/session'
-import { useLogout } from '@/features/auth/use-logout'
-import { ACCOUNT_NAV } from './nav'
+
+// Signed-in only: keeps the menu/popper code out of the critical bundle for visitors.
+const AccountDropdown = lazy(() => import('./AccountDropdown'))
 
 /** "Entrar" for visitors (keeps the current page as return target) or the account menu. */
 export function AccountMenu() {
   const { user, isResolving } = useSession()
   const href = useRouterState({ select: (state) => state.location.href })
-  const logout = useLogout()
 
   if (isResolving) return <Skeleton className="h-8 w-20" />
 
@@ -36,28 +28,8 @@ export function AccountMenu() {
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          {/* The name comes from text (not aria-label) so it never contradicts the initials. */}
-          <UserAvatar user={user} className="size-8" decorative />
-          <span className="sr-only">Conta de {user.displayName}</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="truncate">Olá, {user.displayName}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {ACCOUNT_NAV.map((item) => (
-          <DropdownMenuItem key={item.to} asChild>
-            <Link to={item.to}>{item.label}</Link>
-          </DropdownMenuItem>
-        ))}
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => logout.mutate()} className="text-brand">
-          <LogOutIcon aria-hidden />
-          Sair
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Suspense fallback={<Skeleton className="size-8 rounded-full" />}>
+      <AccountDropdown user={user} />
+    </Suspense>
   )
 }

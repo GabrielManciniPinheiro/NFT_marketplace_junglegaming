@@ -12,21 +12,23 @@ const GUEST_CART_KEY = 'kurio.guest-cart'
 type Listener = (token: string | null) => void
 const listeners = new Set<Listener>()
 
-let token: string | null = local.get<string>(TOKEN_KEY)
-let guestCartId: string | null = local.get<string>(GUEST_CART_KEY)
+// Read lazily: the demo boot may reset storage before the app touches credentials.
+let token: string | null | undefined
+let guestCartId: string | null | undefined
 
 export const credentials = {
-  getToken: () => token,
+  getToken: () => (token === undefined ? (token = local.get<string>(TOKEN_KEY)) : token),
 
   setToken(next: string | null) {
-    if (next === token) return
+    if (next === credentials.getToken()) return
     token = next
     if (next) local.set(TOKEN_KEY, next)
     else local.remove(TOKEN_KEY)
     listeners.forEach((listener) => listener(next))
   },
 
-  getGuestCartId: () => guestCartId,
+  getGuestCartId: () =>
+    guestCartId === undefined ? (guestCartId = local.get<string>(GUEST_CART_KEY)) : guestCartId,
 
   setGuestCartId(next: string | null) {
     guestCartId = next
@@ -46,7 +48,8 @@ export const credentials = {
 if (typeof window !== 'undefined') {
   window.addEventListener('storage', (event) => {
     if (event.key !== TOKEN_KEY) return
-    token = local.get<string>(TOKEN_KEY)
-    listeners.forEach((listener) => listener(token))
+    const next = local.get<string>(TOKEN_KEY)
+    token = next
+    listeners.forEach((listener) => listener(next))
   })
 }

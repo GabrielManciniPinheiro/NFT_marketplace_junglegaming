@@ -51,7 +51,7 @@ export const SCENARIOS = {
   },
   fast: {
     label: 'Sem latência',
-    description: 'Respostas imediatas. Usado pelos testes e pelas auditorias Lighthouse.',
+    description: 'Respostas imediatas. Usado pelos testes E2E.',
     config: { latency: { mode: 'none', baseMs: 0, jitterMs: 0 } },
   },
   slow: {

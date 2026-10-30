@@ -1,0 +1,17 @@
+{
+  "$comment": "Lighthouse audit plan (README › Performance). Pages are audited on the production build served by `vite preview`, with the default mock scenario (variable latency 120–450 ms).",
+  "port": 4174,
+  "runs": 3,
+  "pages": [
+    { "id": "inicio", "path": "/" },
+    { "id": "detalhe", "path": "/nft/emerald-ape-042" }
+  ],
+  "profiles": ["mobile", "desktop"],
+  "categories": ["performance", "accessibility", "best-practices", "seo"],
+  "targets": {
+    "performance": 90,
+    "accessibility": 95,
+    "best-practices": 95,
+    "seo": 90
+  }
+}

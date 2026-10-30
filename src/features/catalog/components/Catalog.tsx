@@ -107,7 +107,7 @@ export function Catalog({ priorityImages = 0 }: { priorityImages?: number }) {
     <section
       id="catalogo"
       aria-labelledby="catalog-heading"
-      className="page-container grid scroll-mt-6 gap-8 py-10 md:grid-cols-[16.5rem_minmax(0,1fr)] lg:grid-cols-[19.5rem_minmax(0,1fr)]"
+      className="page-container grid scroll-mt-6 gap-8 py-10 defer-render md:grid-cols-[16.5rem_minmax(0,1fr)] lg:grid-cols-[19.5rem_minmax(0,1fr)]"
     >
       <h2 id="catalog-heading" className="sr-only">
         Catálogo de NFTs

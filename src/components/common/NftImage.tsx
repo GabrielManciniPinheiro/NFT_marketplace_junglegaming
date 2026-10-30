@@ -10,6 +10,8 @@ interface NftImageProps {
   priority?: boolean
   /** Decorative usage (e.g. thumbnails next to the name) hides it from assistive tech. */
   decorative?: boolean
+  /** Called when the artwork finished loading or failed. */
+  onSettled?: () => void
 }
 
 /**
@@ -22,6 +24,7 @@ export function NftImage({
   className,
   priority = false,
   decorative = false,
+  onSettled,
 }: NftImageProps) {
   return (
     <picture>
@@ -35,6 +38,8 @@ export function NftImage({
         loading={priority ? 'eager' : 'lazy'}
         decoding={priority ? 'sync' : 'async'}
         fetchPriority={priority ? 'high' : 'auto'}
+        onLoad={onSettled}
+        onError={onSettled}
         style={{ backgroundColor: image.dominantColor }}
         className={cn('aspect-square h-auto w-full object-cover', className)}
       />
