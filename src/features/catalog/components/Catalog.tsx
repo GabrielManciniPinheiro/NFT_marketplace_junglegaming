@@ -124,7 +124,7 @@ export function Catalog({ priorityImages = 0 }: { priorityImages?: number }) {
         onValueChange={(value) => update({ tab: value === 'all' ? undefined : (value as NftTab) })}
         className="min-w-0 gap-0"
       >
-        <div className="flex flex-col gap-3 border-b border-border sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-x-6 gap-y-3 border-b border-border sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <TabsList
             variant="line"
             aria-label="Seções do catálogo"
