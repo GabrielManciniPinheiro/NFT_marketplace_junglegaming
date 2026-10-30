@@ -71,6 +71,7 @@ test.describe('Carrinho', () => {
     await page.getByLabel('Senha', { exact: true }).fill('Kurio@2026')
     await page.getByRole('button', { name: 'Entrar', exact: true }).click()
     await expect(page).toHaveURL(/\/pagamento$/)
-    await expect(page.getByText('Golden Signal #160')).toBeVisible()
+    // exact: the "added to cart" toast may still be on screen and mentions the same name.
+    await expect(page.getByText('Golden Signal #160', { exact: true })).toBeVisible()
   })
 })

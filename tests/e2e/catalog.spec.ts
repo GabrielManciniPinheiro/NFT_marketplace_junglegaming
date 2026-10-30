@@ -42,13 +42,17 @@ test.describe('Catálogo', () => {
     // removing a filter goes back to page 1 and widens the result
     await page.getByRole('button', { name: /^Polygon \(remover filtro\)/ }).click()
     await expect(results(page)).toHaveText('38 NFTs encontrados')
+    const firstName = () => cards(page).first().locator('h3')
+    const firstOnPage1 = await firstName().textContent()
     await page.getByRole('link', { name: 'Página 2' }).click()
     await expect(page).toHaveURL(/page=2/)
-    const firstOnPage2 = await cards(page).first().locator('h3').textContent()
+    // Page 1 stays on screen while page 2 loads (keepPreviousData): wait for the new items.
+    await expect(firstName()).not.toHaveText(firstOnPage1 ?? '')
+    const firstOnPage2 = await firstName().textContent()
 
     await page.goBack()
     await expect(page).not.toHaveURL(/page=2/)
-    await expect(cards(page).first()).not.toHaveText(firstOnPage2 ?? '')
+    await expect(firstName()).toHaveText(firstOnPage1 ?? '')
     await page.goForward()
     await expect(page).toHaveURL(/page=2/)
     await expect(cards(page).first().locator('h3')).toHaveText(firstOnPage2 ?? '')

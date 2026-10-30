@@ -58,6 +58,8 @@ test.describe('Tempo real (Socket.IO)', () => {
   test('edição esgota durante o checkout', async ({ page, mock }) => {
     await login(page, 'nova')
     await page.goto('/pagamento')
+    // The warning is about a line already on screen: wait for the cart before the event.
+    await expect(page.getByText('Violet Nomad #314', { exact: true })).toBeVisible()
     await waitForSocket(page, mock)
     await mock.sellOut('violet-nomad-314')
     await expect(page.getByText('Violet Nomad #314: a edição 1/50 esgotou.')).toBeVisible()
