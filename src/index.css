@@ -1,0 +1,194 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/roboto-mono';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Kurio design tokens — sampled from the Figma frames (see ARCHITECTURE.md › Design tokens).
+ * The product only ships a dark theme, so :root holds the final palette.
+ */
+:root {
+  --radius: 0.5rem;
+
+  --background: #140d0a;
+  --foreground: #f5f1eb;
+  --surface: #241612;
+  --surface-2: #2e1e17;
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: #1d1310;
+  --popover-foreground: var(--foreground);
+
+  --primary: #d28a4c;
+  --primary-foreground: #140d0a;
+  --brand: #e89b55;
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface);
+  --muted-foreground: #c3a884;
+  --accent: var(--surface-2);
+  --accent-foreground: var(--foreground);
+
+  --sand: #c3a884;
+  --meta: #a98c5e;
+  --soft: #d9d5cf;
+  --required: #ef7f5e;
+  --destructive: #ef7f5e;
+  --success: #8fcf8a;
+
+  --border: #3b281d;
+  --input: #3b281d;
+  --ring: #e89b55;
+
+  --chart-1: #d28a4c;
+  --chart-2: #c3a884;
+  --chart-3: #a98c5e;
+  --chart-4: #8fcf8a;
+  --chart-5: #ef7f5e;
+
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--surface-2);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: 'Roboto Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-mono: var(--font-sans);
+  --font-heading: var(--font-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-brand: var(--brand);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-sand: var(--sand);
+  --color-meta: var(--meta);
+  --color-soft: var(--soft);
+  --color-required: var(--required);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 4);
+
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+
+  @keyframes shimmer {
+    from {
+      background-position: 150% 0;
+    }
+    to {
+      background-position: -50% 0;
+    }
+  }
+}
+
+/* Page gutter: 1200px content column from the 1440px frames, 16px side gutter on phones. */
+@utility page-container {
+  width: 100%;
+  max-width: calc(1200px + 3rem);
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 1.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply bg-background font-sans;
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  body {
+    @apply min-h-dvh bg-background text-foreground antialiased;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  a,
+  summary,
+  [tabindex]:not([tabindex='-1']) {
+    &:focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
