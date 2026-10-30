@@ -9,7 +9,7 @@ import { eth } from '@/lib/eth'
 import { mockConfig } from '../config'
 import { store } from '../db/store'
 import { summaryById, toNftDetail, toNftSummary } from '../domain/catalog'
-import { HERO_NFT_IDS, SPOTLIGHT_NFT_ID } from '../fixtures/catalog'
+import { FEATURED_DROP_IDS, HERO_NFT_IDS, SPOTLIGHT_NFT_ID } from '../fixtures/catalog'
 import { fail, json, route, toFieldErrors } from '../lib/http'
 
 const DAY = 86_400_000
@@ -136,14 +136,21 @@ export const catalogHandlers = [
   route('get', '/nfts/:id/related', 'none', ({ params }) => {
     const nft = store.getNft(params.id!)
     if (!nft) throw fail(404, 'NOT_FOUND', 'NFT não encontrado.')
+    // NFTs of the same drop come first (the Figma row), then the same collection/artwork.
+    const inDrop = FEATURED_DROP_IDS.includes(nft.fixture.id)
+    const score = (candidate: (typeof store.catalog)[number]) =>
+      (inDrop && FEATURED_DROP_IDS.includes(candidate.id) ? 2 : 0) +
+      (candidate.collection.id === nft.fixture.collection.id || candidate.art === nft.fixture.art
+        ? 1
+        : 0)
     const items = store.catalog
-      .filter(
-        (candidate) =>
-          candidate.id !== nft.fixture.id &&
-          (candidate.collection.id === nft.fixture.collection.id ||
-            candidate.art === nft.fixture.art),
+      .filter((candidate) => candidate.id !== nft.fixture.id && score(candidate) > 0)
+      .sort(
+        (a, b) =>
+          score(b) - score(a) ||
+          FEATURED_DROP_IDS.indexOf(a.id) - FEATURED_DROP_IDS.indexOf(b.id) ||
+          b.trendingScore - a.trendingScore,
       )
-      .sort((a, b) => b.trendingScore - a.trendingScore)
       .slice(0, 5)
       .map((candidate) => toNftSummary(candidate, store.state.nfts[candidate.id]!))
     return json({ items })

@@ -530,3 +530,15 @@ export function buildCatalog(): NftFixture[] {
 /** NFTs promoted on the home page (hero carousel + "NFT em destaque" card). */
 export const HERO_NFT_IDS = ['emerald-ape-042', 'golden-beat-207', 'sage-nomad-009']
 export const SPOTLIGHT_NFT_ID = 'neon-vessel-552'
+
+/** The 8 NFTs drawn in Figma belong to one drop ("Mais desta coleção" shows them together). */
+export const FEATURED_DROP_IDS = [
+  'emerald-ape-042',
+  'cosmic-bloom-118',
+  'violet-nomad-314',
+  'ivory-baron-088',
+  'golden-beat-207',
+  'golden-signal-160',
+  'sage-nomad-009',
+  'neon-vessel-552',
+]

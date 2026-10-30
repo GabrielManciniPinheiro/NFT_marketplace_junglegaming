@@ -29,3 +29,6 @@ dist-ssr
 .DS_Store
 Thumbs.db
 *.log
+
+# tanstack router plugin scratch
+.tanstack

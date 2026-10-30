@@ -134,7 +134,7 @@ export function Catalog({ priorityImages = 0 }: { priorityImages?: number }) {
               <TabsTrigger
                 key={value}
                 value={value}
-                className="flex-none px-0 pt-1 pb-3 text-sm text-soft after:bg-brand group-data-horizontal/tabs:after:-bottom-px group-data-[variant=line]/tabs-list:data-active:text-brand"
+                className="h-auto flex-none px-0 pt-1 pb-3 text-sm text-soft after:bg-brand group-data-horizontal/tabs:after:-bottom-px group-data-[variant=line]/tabs-list:data-active:text-brand"
               >
                 {NFT_TAB_LABEL[value]}
               </TabsTrigger>
