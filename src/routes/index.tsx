@@ -1,16 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { usePageTitle } from '@/lib/use-page-title'
 
 export const Route = createFileRoute('/')({
-  component: HomePage,
+  component: Page,
 })
 
-function HomePage() {
+function Page() {
+  usePageTitle('Início')
   return (
-    <main className="page-container py-16">
-      <p className="text-sm text-sand">Bem-vindo à Kurio</p>
-      <h1 className="mt-4 text-4xl leading-snug font-bold uppercase">
-        Seja dono do futuro da arte digital
-      </h1>
-    </main>
+    <section className="page-container py-12">
+      <h1 className="text-2xl font-bold">Início</h1>
+    </section>
   )
 }

@@ -112,11 +112,12 @@ export function MockLab() {
           type="button"
           variant="outline"
           size="sm"
-          className="fixed bottom-4 left-4 z-40 border-primary/60 bg-background/95 shadow-lg backdrop-blur"
+          aria-label="Abrir Mock Lab (simulação do backend)"
+          className="fixed bottom-4 left-4 z-40 border-primary/60 bg-background/95 shadow-lg backdrop-blur max-sm:size-10 max-sm:p-0"
           data-testid="mock-lab-trigger"
         >
           <FlaskConicalIcon aria-hidden />
-          Mock Lab
+          <span className="max-sm:sr-only">Mock Lab</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-full overflow-y-auto sm:max-w-md">

@@ -124,16 +124,4 @@ export async function requestVoid(options: RequestOptions): Promise<void> {
   await send(options)
 }
 
-/** Encodes list filters as `key=a,b` (arrays) and drops empty values. */
-export function toSearchParams(query: Record<string, unknown>) {
-  const params = new URLSearchParams()
-  for (const [key, value] of Object.entries(query)) {
-    if (value === undefined || value === null || value === '') continue
-    if (Array.isArray(value)) {
-      if (value.length) params.set(key, value.join(','))
-    } else {
-      params.set(key, String(value))
-    }
-  }
-  return params
-}
+export { toSearchParams } from '@/lib/search-params'
