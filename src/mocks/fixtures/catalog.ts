@@ -10,20 +10,20 @@ export type ArtKey = 'ape-emerald' | 'gorilla-sage' | 'chimp-ivory' | 'monkey-go
 const ARTWORK: Record<ArtKey, { subject: string; dominantColor: string }> = {
   'ape-emerald': {
     subject:
-      'macaco de pelagem castanha com óculos redondos de lentes verdes e jaqueta college verde',
-    dominantColor: '#e1dfcc',
+      'macaco de pelagem castanha com óculos redondos de lentes verdes, jaqueta college verde e pingente de esmeralda',
+    dominantColor: '#c5c29e',
   },
   'gorilla-sage': {
     subject: 'gorila cinza com chapéu bucket verde-sálvia e moletom roxo',
-    dominantColor: '#f1ead3',
+    dominantColor: '#fef2d8',
   },
   'chimp-ivory': {
-    subject: 'chimpanzé de pelagem escura com blazer marfim e gola alta verde',
-    dominantColor: '#cfe0cf',
+    subject: 'chimpanzé de pelagem escura com argola dourada, blazer marfim e gola alta verde',
+    dominantColor: '#b3cdb7',
   },
   'monkey-golden': {
     subject: 'macaco de pelagem dourada com fones de ouvido verdes e jaqueta creme',
-    dominantColor: '#f2e8d2',
+    dominantColor: '#fdf2db',
   },
 }
 

@@ -189,10 +189,10 @@ mediana. Resultado atual (medianas):
 
 | Página  | Perfil  | Performance | Accessibility | Best Practices | SEO |    LCP |   CLS |    TBT |
 | ------- | ------- | ----------: | ------------: | -------------: | --: | -----: | ----: | -----: |
-| Início  | mobile  |          91 |           100 |            100 | 100 | 3,44 s | 0,003 |  98 ms |
-| Início  | desktop |         100 |           100 |            100 | 100 | 0,73 s | 0,001 |   0 ms |
-| Detalhe | mobile  |          90 |           100 |            100 | 100 | 3,49 s | 0,000 | 110 ms |
-| Detalhe | desktop |         100 |           100 |            100 | 100 | 0,75 s | 0,000 |   0 ms |
+| Início  | mobile  |          91 |           100 |            100 | 100 | 3,45 s | 0,003 | 102 ms |
+| Início  | desktop |         100 |           100 |            100 | 100 | 0,74 s | 0,001 |   0 ms |
+| Detalhe | mobile  |          90 |           100 |            100 | 100 | 3,48 s | 0,000 | 103 ms |
+| Detalhe | desktop |         100 |           100 |            100 | 100 | 0,74 s | 0,000 |   0 ms |
 
 Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 90. A metodologia, o
 histórico das otimizações e os limites conhecidos estão em

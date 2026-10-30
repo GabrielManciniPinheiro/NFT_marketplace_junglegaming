@@ -20,7 +20,7 @@ const VIEWS = [
   { suffix: '', box: { left: 0, top: 0, size: 1 } },
   { suffix: '-face', box: { left: 0.2, top: 0.04, size: 0.6 } },
   { suffix: '-detail', box: { left: 0.25, top: 0.48, size: 0.5 } },
-  { suffix: '-outfit', box: { left: 0, top: 0.4, size: 0.6 } },
+  { suffix: '-outfit', box: { left: 0, top: 0.5, size: 0.5 } },
 ] as const
 
 await mkdir(OUT_DIR, { recursive: true })

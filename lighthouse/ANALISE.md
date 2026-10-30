@@ -20,10 +20,10 @@ ambiente), `reports/<página>-<perfil>.report.html|json` (execução mediana de 
 
 | Página                           | Perfil  | Perf. | A11y |  BP | SEO |    LCP |   CLS |    TBT |
 | -------------------------------- | ------- | ----: | ---: | --: | --: | -----: | ----: | -----: |
-| Início (`/`)                     | mobile  |    91 |  100 | 100 | 100 | 3,44 s | 0,003 |  98 ms |
-| Início (`/`)                     | desktop |   100 |  100 | 100 | 100 | 0,73 s | 0,001 |   0 ms |
-| Detalhe (`/nft/emerald-ape-042`) | mobile  |    90 |  100 | 100 | 100 | 3,49 s | 0,000 | 110 ms |
-| Detalhe (`/nft/emerald-ape-042`) | desktop |   100 |  100 | 100 | 100 | 0,75 s | 0,000 |   0 ms |
+| Início (`/`)                     | mobile  |    91 |  100 | 100 | 100 | 3,45 s | 0,003 | 102 ms |
+| Início (`/`)                     | desktop |   100 |  100 | 100 | 100 | 0,74 s | 0,001 |   0 ms |
+| Detalhe (`/nft/emerald-ape-042`) | mobile  |    90 |  100 | 100 | 100 | 3,48 s | 0,000 | 103 ms |
+| Detalhe (`/nft/emerald-ape-042`) | desktop |   100 |  100 | 100 | 100 | 0,74 s | 0,000 |   0 ms |
 
 Todas as metas (Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 90) foram
 atingidas. As três execuções de cada combinação variaram no máximo 1 ponto.
@@ -35,11 +35,11 @@ portanto: HTML → JavaScript do app → Service Worker do MSW pronto → `GET /
 
 |                                        |   Início |  Detalhe |
 | -------------------------------------- | -------: | -------: |
-| LCP observado (sem throttling)         | ≈ 0,76 s | ≈ 0,82 s |
-| — atraso até a imagem começar a baixar |   662 ms |   669 ms |
-| — download da imagem                   |    42 ms |    41 ms |
-| — atraso de renderização               |    55 ms |   103 ms |
-| LCP simulado (mobile)                  |   3,44 s |   3,49 s |
+| LCP observado (sem throttling)         | ≈ 0,78 s | ≈ 0,82 s |
+| — atraso até a imagem começar a baixar |   661 ms |   673 ms |
+| — download da imagem                   |    40 ms |    43 ms |
+| — atraso de renderização               |    73 ms |    99 ms |
+| LCP simulado (mobile)                  |   3,45 s |   3,48 s |
 | Nota da métrica LCP                    |     0,65 |     0,64 |
 
 O LCP simulado (Lantern) reaplica essa cadeia com RTT de 150 ms, banda de 1,6 Mbps e CPU 4× mais
@@ -64,7 +64,8 @@ Valores de performance do Início no mobile. As etapas intermediárias são exec
 | Dependências de boot em um chunk `vendor`                                                                                                                                      |          87 |
 | Grupos `react`/`tanstack`/`vendor`/`app` só com o que o boot usa                                                                                                               |       89–90 |
 | Medição oficial (3 execuções)                                                                                                                                                  |          88 |
-| Código do catálogo (abaixo da dobra no celular) carregado só depois da arte do hero                                                                                            |      **91** |
+| Código do catálogo (abaixo da dobra no celular) carregado só depois da arte do hero                                                                                            |          91 |
+| Artes originais em alta resolução (arte do LCP de 20 para 35 KB), medição oficial                                                                                              |      **91** |
 
 No Detalhe, a principal correção foi de estabilidade visual: as abas de informação agora têm
 skeleton com a altura final, o que levou o CLS do desktop de 0,097 para 0,000.

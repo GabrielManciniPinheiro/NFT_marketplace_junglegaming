@@ -291,8 +291,10 @@ aplicado:
   `<link rel=preload imagesrcset … fetchpriority=high>` é injetado antes mesmo do render. Na página
   inicial, o código do catálogo (abaixo da dobra no celular) só é baixado depois que essa arte
   aparece, para não disputar banda com ela.
-- **Imagens:** AVIF/WebP em 320/640/960 px com `sizes` corretos, dimensões intrínsecas e cor
-  dominante como placeholder (sem layout shift).
+- **Imagens:** as artes originais (1254 px) ficam em `assets-src/nfts/`; `npm run images` gera
+  AVIF/WebP em 320/640/960 px da arte e de três recortes da galeria (rosto, acessório,
+  figurino). Na página, `sizes` corretos, dimensões intrínsecas e a cor de fundo da arte como
+  placeholder (sem layout shift).
 - **Renderização:** `content-visibility: auto` em seções longas abaixo da dobra; skeletons com as
   mesmas dimensões do conteúdo final.
 - **Fonte:** Roboto Mono variável, auto-hospedada (woff2, apenas latin).
@@ -339,10 +341,6 @@ Utilitários próprios: `page-container` (largura máxima de 1200 px com margens
   rede e endereço antes da escolha e leva ao cadastro de uma nova.
 - **Ponto como separador decimal em ETH** (como no layout e na convenção cripto); datas e o
   restante da formatação seguem pt-BR.
-- **Artes dos NFTs** recortadas das capturas do layout, pois os arquivos originais não estavam
-  disponíveis. Para trocar: exporte as artes do Figma em 2x para `assets-src/nfts/` e rode
-  `npm run images`.
-- **Fonte Roboto Mono** inferida dos frames.
 - Páginas citadas na navegação mas fora do escopo (Aprenda, Criadores) exibem “Em breve”.
 
 ## Limitações e próximos passos

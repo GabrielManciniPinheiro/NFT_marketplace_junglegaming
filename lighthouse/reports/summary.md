@@ -1,19 +1,19 @@
 # Auditoria Lighthouse
 
-Gerado por `npm run lighthouse` em 2026-10-30T14:50:54.776Z.
+Gerado por `npm run lighthouse` em 2026-10-30T15:30:55.862Z.
 
 | Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| inicio (`/`) | mobile | 91 | 100 | 100 | 100 | 3.44 s | 0.003 | 98 ms |
-| inicio (`/`) | desktop | 100 | 100 | 100 | 100 | 0.73 s | 0.001 | 0 ms |
-| detalhe (`/nft/emerald-ape-042`) | mobile | 90 | 100 | 100 | 100 | 3.49 s | 0.000 | 110 ms |
-| detalhe (`/nft/emerald-ape-042`) | desktop | 100 | 100 | 100 | 100 | 0.75 s | 0.000 | 0 ms |
+| inicio (`/`) | mobile | 91 | 100 | 100 | 100 | 3.45 s | 0.003 | 102 ms |
+| inicio (`/`) | desktop | 100 | 100 | 100 | 100 | 0.74 s | 0.001 | 0 ms |
+| detalhe (`/nft/emerald-ape-042`) | mobile | 90 | 100 | 100 | 100 | 3.48 s | 0.000 | 103 ms |
+| detalhe (`/nft/emerald-ape-042`) | desktop | 100 | 100 | 100 | 100 | 0.74 s | 0.000 | 0 ms |
 
 Medianas de 3 execuções por página e perfil. Metas: performance ≥ 90, accessibility ≥ 95, best-practices ≥ 95, seo ≥ 90.
 
 ## Ambiente
 
-- **date**: 2026-10-30T14:50:54.776Z
+- **date**: 2026-10-30T15:30:55.862Z
 - **node**: v24.21.0
 - **os**: Windows_NT 10.0.26200 (x64)
 - **cpu**: AMD Ryzen 5 3600 6-Core Processor              
