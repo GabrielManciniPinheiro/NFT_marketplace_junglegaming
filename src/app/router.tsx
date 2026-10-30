@@ -34,5 +34,7 @@ declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
     /** Pages behind authentication: a session expiry sends the visitor to the login page. */
     requiresAuth?: boolean
+    /** Standalone screens (login/register frames) render without header and footer. */
+    bareLayout?: boolean
   }
 }

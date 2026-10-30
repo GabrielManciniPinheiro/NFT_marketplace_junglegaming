@@ -18,6 +18,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { mockConfig, type MockConfig, type ScenarioId } from '../config'
+import { DEMO_PASSWORD, USER_SEEDS } from '../fixtures/accounts'
 import { mockControl } from '../control'
 import { onRealtimeStatusChange, realtimeStatus } from '../realtime/server'
 
@@ -130,6 +131,19 @@ export function MockLab() {
         </SheetHeader>
 
         <div className="space-y-4 px-4 pb-6 text-sm">
+          <Section title="Contas de demonstração">
+            <ul className="space-y-1 text-xs text-sand">
+              {USER_SEEDS.map((user) => (
+                <li key={user.id}>
+                  <span className="text-foreground">{user.email}</span> — {user.displayName}
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs text-sand">
+              Senha de ambas: <code className="text-foreground">{DEMO_PASSWORD}</code>
+            </p>
+          </Section>
+
           <Section title="Cenário">
             <Label htmlFor="mock-scenario" className="sr-only">
               Cenário ativo

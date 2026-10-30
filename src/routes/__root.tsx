@@ -1,4 +1,4 @@
-import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext, useMatches } from '@tanstack/react-router'
 import type { RouterContext } from '@/app/router'
 import { NotFound } from '@/components/common/NotFound'
 import { AppFooter } from '@/components/layout/AppFooter'
@@ -16,6 +16,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 })
 
 function RootLayout() {
+  const bare = useMatches({
+    select: (matches) => matches.some((match) => match.staticData?.bareLayout),
+  })
   return (
     <RealtimeProvider>
       <TooltipProvider delayDuration={300}>
@@ -26,12 +29,12 @@ function RootLayout() {
           Pular para o conteúdo
         </a>
         <div className="flex min-h-dvh flex-col">
-          <AppHeader />
+          {!bare && <AppHeader />}
           <RealtimeBanner />
           <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
             <Outlet />
           </main>
-          <AppFooter />
+          {!bare && <AppFooter />}
         </div>
         <Toaster position="bottom-right" closeButton />
         <SessionManager />
