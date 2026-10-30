@@ -175,9 +175,12 @@ npm run test:e2e:report
   borda, em desktop. Cobrem catálogo/URL, detalhe, favoritos, carrinho, autenticação, checkout
   (idempotência, timeout, cotação alterada, pedido pendente), conta, tempo real (duplicados,
   versões antigas, queda e reconexão, isolamento entre usuários) e acessibilidade (axe).
-- **Regressão visual:** Início, Detalhe, Carrinho e Pagamento em desktop e mobile. As baselines
-  ficam em `tests/e2e/__screenshots__/<plataforma>/` — as versionadas foram geradas no Windows;
-  em outro sistema operacional, gere as suas com `npm run test:e2e:update` antes de comparar.
+- **Regressão visual:** Início, Detalhe, Carrinho e Pagamento em desktop e mobile, comparados
+  com imagens de referência em `tests/e2e/__screenshots__/<plataforma>/`. Como cada sistema
+  operacional desenha as fontes de um jeito, há uma pasta por plataforma; as versionadas são do
+  Windows. Em macOS ou Linux, esses 8 testes aparecem como **pulados** (com o aviso no relatório)
+  até você gerar as referências locais com `npm run test:e2e:update`; a partir daí, comparam
+  normalmente.
 - **Diagnóstico:** relatório HTML em `playwright-report/`; trace, vídeo e screenshot são mantidos
   para testes que falham (`test-results/`), abertos pelo próprio relatório.
 
