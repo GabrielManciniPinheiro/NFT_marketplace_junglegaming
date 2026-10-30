@@ -26,7 +26,9 @@ function OrderPage() {
     ...orderQueryOptions(user?.id ?? 'anonymous', orderId),
     enabled: Boolean(user),
   })
-  usePageTitle(order.data ? STATUS_TITLE[order.data.status] : 'Pedido')
+  usePageTitle(order.data ? STATUS_TITLE[order.data.status] : 'Pedido', {
+    provisional: order.isPending,
+  })
 
   if (isApiError(order.error) && order.error.is('NOT_FOUND')) {
     return (

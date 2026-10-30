@@ -82,7 +82,10 @@ test.describe('Acessibilidade', () => {
     })
   }
 
-  test('anuncia mudanças de rota', async ({ page }) => {
+  test('anuncia mudanças de rota', async ({ page, mock }) => {
+    // The NFT name arrives after the focus move: the announcement must wait for it instead
+    // of reading the provisional "NFT" title.
+    await mock.preset('fast', { latency: { mode: 'fixed', baseMs: 600, jitterMs: 0 } })
     await page.goto('/')
     await page.getByRole('link', { name: 'Emerald Ape #042' }).first().click()
     await expect(page.locator('#main-content')).toBeFocused()

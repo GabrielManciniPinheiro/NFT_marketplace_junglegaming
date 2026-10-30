@@ -299,8 +299,10 @@ aplicado:
 
 ## Acessibilidade
 
-- Link “Pular para o conteúdo”, landmarks e títulos por página; após cada navegação o foco vai
-  para o conteúdo principal e o novo título é anunciado (mudanças só de filtros mantêm o foco).
+- Link “Pular para o conteúdo”, landmarks e títulos por página. Após cada navegação o foco vai
+  para o conteúdo principal e o título da nova página é anunciado — o anúncio espera o título
+  final (não o da página anterior nem o provisório “NFT” enquanto os dados carregam). Mudanças
+  só de filtros mantêm o foco.
 - Formulários com rótulos visíveis, mensagens de erro associadas aos campos (`aria-describedby`),
   foco no primeiro erro e erros do servidor mapeados para os campos.
 - Diálogos, menus e selects do Radix (teclado e foco gerenciados); controles com nome acessível

@@ -28,7 +28,9 @@ function NftDetailPage() {
   const detail = useQuery(nftDetailQueryOptions(nftId))
   const [tab, setTab] = useState<InfoTab>('detalhes')
   const notFound = isApiError(detail.error) && detail.error.is('NOT_FOUND')
-  usePageTitle(detail.data?.name ?? (notFound ? 'NFT não encontrado' : 'NFT'))
+  usePageTitle(detail.data?.name ?? (notFound ? 'NFT não encontrado' : 'NFT'), {
+    provisional: detail.isPending,
+  })
 
   if (notFound) {
     return (
