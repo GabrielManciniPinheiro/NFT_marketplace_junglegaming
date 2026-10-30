@@ -5,7 +5,8 @@ filtros na URL, detalhe com edições, favoritos, carrinho com cupom e cotação
 idempotente, confirmação em tempo real, autenticação e área do colecionador — tudo sobre uma API
 REST e um servidor Socket.IO simulados por MSW, com cenários de falha reproduzíveis.
 
-- **Demo:** _adicionar a URL da Vercel após o deploy_
+- **Demo:** https://nftmarketplace.gmpsaas.com (também em
+  https://nftmarketplacejunglegaming.vercel.app)
 - **Arquitetura e decisões:** [ARCHITECTURE.md](ARCHITECTURE.md)
 - **Auditoria Lighthouse:** [lighthouse/reports/summary.md](lighthouse/reports/summary.md) e
   [lighthouse/ANALISE.md](lighthouse/ANALISE.md)
@@ -207,6 +208,11 @@ O app é estático (SPA) e já inclui a camada simulada, então qualquer hospeda
 Na Vercel: importe o repositório (framework **Vite**, build `npm run build`, saída `dist`); o
 `vercel.json` reescreve as rotas da SPA para `index.html` sem afetar `assets/` nem o
 `mockServiceWorker.js`.
+
+A versão publicada está em https://nftmarketplace.gmpsaas.com (domínio próprio, com DNS na
+Cloudflare em modo “DNS only” apontando para a Vercel) e em
+https://nftmarketplacejunglegaming.vercel.app. Os dados de demonstração ficam no navegador e são
+separados por endereço: carrinho, sessão e pedidos de uma URL não aparecem na outra.
 
 ## Estrutura
 
